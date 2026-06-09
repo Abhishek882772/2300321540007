@@ -1,16 +1,23 @@
 const axios = require("axios");
 
 async function fetchNotifications() {
-  const response = await axios.get(
-    "http://4.224.186.213/evaluation-service/notifications",
-    {
-      headers: {
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiYXVkIjoiaHR0cDovLzIwLjI0NC41Ni4xNDQvZXZhbHVhdGlvbi1zZXJ2aWNlIiwiZW1haWwiOiJhYmhpc2hlay4yM2IxNTQxMDc1QGFiZXMuYWMuaW4iLCJleHAiOjE3ODA5ODk0MzYsImlhdCI6MTc4MDk4ODUzNiwiaXNzIjoiQWZmb3JkIE1lZGljYWwgVGVjaG5vbG9naWVzIFByaXZhdGUgTGltaXRlZCIsImp0aSI6ImU3YWQyMWM1LTkzNmUtNDE5OC05ZDIxLTJiYzhhNDZhMGE5NyIsImxvY2FsZSI6ImVuLUlOIiwibmFtZSI6ImFiaGlzaGVrIHRyaXBhdGhpIiwic3ViIjoiZGQyOWRlMDctYWM3Yi00MDk3LWI1NGItMzg2YmE3MjA4NjMxIn0sImVtYWlsIjoiYWJoaXNoZWsuMjNiMTU0MTA3NUBhYmVzLmFjLmluIiwibmFtZSI6ImFiaGlzaGVrIHRyaXBhdGhpIiwicm9sbE5vIjoiMjMwMDMyMTU0MDAwNyIsImFjY2Vzc0NvZGUiOiJjWHVxaHQiLCJjbGllbnRJRCI6ImRkMjlkZTA3LWFjN2ItNDA5Ny1iNTRiLTM4NmJhNzIwODYzMSIsImNsaWVudFNlY3JldCI6ImpxQURTTlpCeW5OZkN5eEIifQ._ZcF7R4K2UNd5sxH6WFdYt_USDk3CPi2gFPwJXxB3AE",
-      },
-    }
-  );
+  try {
+    console.log("TOKEN =", process.env.ACCESS_TOKEN);
+    const response = await axios.get(
+      "http://4.224.186.213/evaluation-service/notifications",
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+        },
+      }
+    );
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    console.log("STATUS:", error.response?.status);
+    console.log("DATA:", error.response?.data);
+    throw error;
+  }
 }
 
 module.exports = {
